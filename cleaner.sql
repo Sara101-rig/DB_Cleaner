@@ -10,7 +10,7 @@ CREATE TABLE oficina (
   codigo_postal VARCHAR(10) NOT NULL,
   telefono VARCHAR(20) NOT NULL,
   linea_direccion1 VARCHAR(50) NOT NULL,
-  linea_direccion2 VARCHAR(50) DEFAULT NULL,
+  linea_direccion2 VARCHAR(50) DEFAULT 'NO TIENE',
   PRIMARY KEY (codigo_oficina)
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE gama_producto (
 );
 
 CREATE TABLE cliente (
-  codigo_cliente INTEGER NOT NULL,
+  codigo_cliente INTEGER AUTO_INCREMENT NOT NULL,
   nombre_cliente VARCHAR(50) NOT NULL,
   nombre_contacto VARCHAR(30) DEFAULT NULL,
   apellido_contacto VARCHAR(30) DEFAULT NULL,
@@ -54,7 +54,8 @@ CREATE TABLE cliente (
   limite_credito NUMERIC(15,2) DEFAULT NULL,
   PRIMARY KEY (codigo_cliente),
   FOREIGN KEY (codigo_empleado_rep_ventas) REFERENCES empleado (codigo_empleado)
-);
+  ) AUTO_INCREMENT = 10;
+
 
 CREATE TABLE pedido (
   codigo_pedido INTEGER NOT NULL,
@@ -938,8 +939,50 @@ SELECT codigo_empleado, nombre, apellido1, apellido2,
 extension, email, codigo_oficina, codigo_jefe
 puesto FROM EMPLEADO;
 
-/* RETO 1 - Retorna un listado con el código de oficina y 
-la ciudad donde hay oficinas */
+/* RETO A  Retorna un listado con el código de oficina y la ciudad donde hay oficinas */ 
+SHOW TABLES; 
+DESCRIBE oficina;
+SELECT codigo_oficina, ciudad, pais, region,
+codigo_postal,telefono,linea_direccion1, linea_direccion2
+FROM oficina;
+SELECT codigo_oficina, ciudad
+FROM oficina;
+
+/* RETO B Retorna un listado con la ciudad y el teléfono de las oficinas de España.*/ 
+SHOW TABLES;
+DESCRIBE oficina;
+SELECT codigo_oficina, ciudad, pais, region,
+codigo_postal,telefono,linea_direccion1, linea_direccion2
+FROM oficina;
+SELECT ciudad, telefono 
+FROM oficina
+WHERE pais = 'España';
+
+/* RETO C Retorna un listado con el nombre, apellidos y email de los empleados cuyo jefe tiene un código de jefe igual a 7.*/
+SHOW TABLES;
+DESCRIBE empleado;
+SELECT codigo_empleado, nombre, apellido1, apellido2,
+extension, email, codigo_oficina, codigo_jefe, puesto
+fROM empleado;
+SELECT nombre, apellido1, apellido2, email
+FROM empleado
+WHERE codigo_jefe = 7;
+
+/* RETO D Retorna el nombre del puesto, nombre, apellidos y email del jefe de la empresa.*/
+SHOW TABLES;
+DESCRIBE empleado;
+SELECT codigo_empleado, nombre, apellido1, apellido2,
+extension, email, codigo_oficina, codigo_jefe, puesto
+FROM empleado;
+SELECT puesto, nombre, apellido1, apellido2, email
+FROM empleado
+WHERE codigo_jefe IS NULL;
+SELECT * FROM empleado WHERE codigo_jefe IS NULL;
+
+/* RETO C Retorna un listado con el nombre, apellidos y puesto de aquellos empleados que no sean representantes de ventas.*/
+/* RETO E Retorna un listado con los distintos estados por los que puede pasar un pedido.*/
+/* RETO F Retorna un listado con los distintos estados por los que puede pasar un pedido./*
+
 
 describe oficina;
 
